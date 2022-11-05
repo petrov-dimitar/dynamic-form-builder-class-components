@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
+
 class DynamicFormBulder extends Component {
   constructor(props) {
     super(props);
@@ -18,20 +19,19 @@ class DynamicFormBulder extends Component {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      // Make state to valid to show success and reset form
+      // Make state to valid to show success and reset form.
       this.setState({ isValid: true, validated: false });
       event.preventDefault();
 
       //   Apply custom onSubmit from props
       if (this.props.onSubmit) {
-        let data = [];
-        this.props.formJSON[0].fields.forEach((field) => {
-          let element;
-          element = document.getElementById(field.id);
-
+        // Transform data parameter to desired structure.
+        const data = [...this.props.formJSON[0].fields].map((field) => {
+          const element = document.getElementById(field.id);
           if (element) {
-            data.push({ [element.id]: element.value });
+            return { [element.id]: element.value };
           }
+          return undefined;
         });
 
         this.props.onSubmit(data);
