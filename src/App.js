@@ -50,7 +50,12 @@ const formJSON = [
 function App() {
   return (
     <div className="container">
-      <DynamicFormBulder formJSON={formJSON} />
+      <DynamicFormBulder
+        formJSON={formJSON}
+        onSubmit={(data) => {
+          console.log(data);
+        }}
+      />
     </div>
   );
 }
