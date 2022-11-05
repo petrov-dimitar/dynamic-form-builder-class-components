@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+Implement a Dynamic Form Builder component that takes a JSON and render form:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+JSON example:
 
-## Available Scripts
+const formJSON = [
+    {
+        "fields": [
+            {
+                "id": "firstname",
+                "label": "First Name",
+                "required": true,
+                "placeholder": "Enter your first name ...",
+                "type": "text",
+                "value": ""
+            },
+            {
+                "id": "lastname",
+                "label": "Last Name",
+                "required": true,
+                "placeholder": "Enter your last name ...",
+                "type": "text",
+                "value": ""
+            },
+            {
+                "id": "country",
+                "label": "County",
+                "required": true,
+                "type": "select",
+                "options": [
+                    { "label": "Bulgaria"},
+                    { "label": "Greece"},
+                    { "label": "Romania"},
+                    { "label": "Serbia"}
+                ],
+                "value": ""
+            },
+            {
+                "id": "subscribe",
+                "label": "Subscribe to newsletter",
+                "type": "checkbox",
+                "value": ""
+            }
+        ]
+    }
+]
+The Dynamic Form Builder should support following form elements: text input, select, and checkbox. For each row element to render (if applicable): label, asterisk to indicate whether is required element, placeholder, value, and options.
 
-In the project directory, you can run:
+Initialization example:
 
-### `npm start`
+import formJSON from "./formData.json";
+import DynamicFormBuilder from "./dynamicFormBuilder";
+ 
+function App() {
+ 
+  return (
+    <div className="container">
+      <DynamicFormBuilder formJSON={formJSON} />
+    </div>
+  );
+}
+ 
+export default App;
+The Dynamic Form Builder should have a propery onSubmit in order to process form data submission.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Binding to event example:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<DynamicFormBuilder formJSON={formJSON} onSubmit={(data) => { console.log(data) }} />
+console.log should output form data - the field id and element value - [{"firstname":"Ivan"},{"lastname":"Petrov"},{"country":"Bulgaria"},{"subscribe":true}]
 
-### `npm test`
+Implement validation for required fields in order to prevent form submission.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Enchance formJSON structure and Dynamic Form Builder functionality in order to support generic field visibility scenarios. You should cover following scenario: having fields Subscribe to newsletter and email. In the email field the user inputs his email to subscribe for the newsletter. The email field should be visibile only when subscribe checkbox is checked.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Use ES6, Boostrap for styling, React, Create React App to create application, Function Components, Class Components, Handling Events, and etc. for the implementation.

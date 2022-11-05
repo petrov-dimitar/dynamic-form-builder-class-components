@@ -1,23 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+/** @format */
+
+import logo from "./logo.svg";
+import "./App.css";
+import DynamicFormBulder from "./DynamicFormBuilder/DynamicFormBuilder";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+const formJSON = [
+  {
+    fields: [
+      {
+        id: "firstname",
+        label: "First Name",
+        required: true,
+        placeholder: "Enter your first name ...",
+        type: "text",
+        value: "",
+      },
+      {
+        id: "lastname",
+        label: "Last Name",
+        required: true,
+        placeholder: "Enter your last name ...",
+        type: "text",
+        value: "",
+      },
+      {
+        id: "country",
+        label: "County",
+        required: true,
+        type: "select",
+        options: [
+          { label: "Bulgaria" },
+          { label: "Greece" },
+          { label: "Romania" },
+          { label: "Serbia" },
+        ],
+        value: "",
+      },
+      {
+        id: "subscribe",
+        label: "Subscribe to newsletter",
+        type: "checkbox",
+        value: "",
+      },
+    ],
+  },
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <DynamicFormBulder formJSON={formJSON} />
     </div>
   );
 }
