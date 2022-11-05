@@ -15,6 +15,8 @@ class DynamicFormBulder extends Component {
 
   handleSubmit = (event) => {
     const form = event.currentTarget;
+
+    console.log(form.checkValidity());
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
@@ -23,87 +25,62 @@ class DynamicFormBulder extends Component {
     this.setState({ validated: true });
   };
   render() {
-    let renderElement = null;
-
-    console.log(this.state.validated);
-
     return (
       <>
         <h3> Dynamic Form Builder With Class Components</h3>
 
         <Form
           noValidate
-          validated={this.validated}
+          validated={this.state.validated}
           onSubmit={this.handleSubmit}
         >
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <Form.Label>First name</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="First name"
-                defaultValue="Mark"
-              />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom02">
-              <Form.Label>Last name</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Last name"
-                defaultValue="Otto"
-              />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-              <Form.Label>Username</Form.Label>
-              <InputGroup hasValidation>
-                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="Username"
-                  aria-describedby="inputGroupPrepend"
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please choose a username.
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="6" controlId="validationCustom03">
-              <Form.Label>City</Form.Label>
-              <Form.Control type="text" placeholder="City" required />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationCustom04">
-              <Form.Label>State</Form.Label>
-              <Form.Control type="text" placeholder="State" required />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationCustom05">
-              <Form.Label>Zip</Form.Label>
-              <Form.Control type="text" placeholder="Zip" required />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Form.Group className="mb-3">
-            <Form.Check
-              required
-              label="Agree to terms and conditions"
-              feedback="You must agree before submitting."
-              feedbackType="invalid"
-            />
+          <Form.Group as={Col} md="4" controlId="validationCustom01">
+            {this.props.formJSON[0].fields.map((field) => {
+              if (field.type === "select") {
+                return (
+                  <div key={field.label}>
+                    <Form.Label>{field.label}</Form.Label>
+                    <Form.Select aria-label="Default select example">
+                      {field.options.map((option) => (
+                        <option value={option.label}>{option.label}</option>
+                      ))}
+                    </Form.Select>
+                  </div>
+                );
+              } else if (field.type === "checkbox") {
+                return (
+                  <div key={field.label}>
+                    <Form.Check
+                      required={field.required}
+                      label={field.label}
+                      feedback={
+                        field.required
+                          ? "Please check that box before submit"
+                          : undefined
+                      }
+                      feedbackType="invalid"
+                    />
+                  </div>
+                );
+              } else {
+                return (
+                  <>
+                    <Form.Label>{field.label}</Form.Label>
+                    <Form.Control
+                      required={field.required}
+                      type={field.type}
+                      placeholder={field.placeholder}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide a valid {field.label}
+                    </Form.Control.Feedback>
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  </>
+                );
+              }
+            })}
           </Form.Group>
+
           <Button type="submit">Submit form</Button>
         </Form>
       </>
